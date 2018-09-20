@@ -15,8 +15,8 @@ public class Capteur {
 		int distanceMin=1000;
 		int[] posPoussiere=null;
 		
-		for (int i=0; i<env.cases.length;i++)
-			for(int j=0;j<env.cases[i].length;j++)
+		for (int i=0; i<env.cases.length&&distanceMin!=1;i++)
+			for(int j=0;j<env.cases[i].length&&distanceMin!=1;j++)
 			{
 				if(env.cases[i][j].poussiere==true)
 				{

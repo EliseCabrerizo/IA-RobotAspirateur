@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Timer;
 
 public class Aspirateur 
 {
