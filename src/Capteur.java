@@ -15,15 +15,15 @@ public class Capteur {
 		int distanceMin=1000;
 		int[] posPoussiere=null;
 		
-		for (int i=0; i<env.cases.length&&distanceMin!=1;i++)
-			for(int j=0;j<env.cases[i].length&&distanceMin!=1;j++)
+		for (int i=0; i<env.getTaille()&&distanceMin!=1;i++)
+			for(int j=0;j<env.getTaille()&&distanceMin!=1;j++)
 			{
-				if(env.cases[i][j].poussiere==true)
+				if(env.getCase(j,i).getPoussiere()==true)
 				{
-					if(CalculDistance(posX,i,posY,j)<distanceMin)
+					if(CalculDistance(posX,j,posY,i)<distanceMin)
 					{
 						int[]temp= {i,j};
-						distanceMin=CalculDistance(posX,i,posY,j);
+						distanceMin=CalculDistance(posX,j,posY,i);
 						posPoussiere=temp;
 					}
 				}
@@ -32,9 +32,9 @@ public class Capteur {
 		return posPoussiere;
 	}
 	
-	public int CalculDistance(int posX,int i,int posY, int j)
+	public int CalculDistance(int posX,int j,int posY, int i)
 	{
-		return (posX-i)+(posY-j);
+		return (posX-j)+(posY-i);
 	}
 	
 	

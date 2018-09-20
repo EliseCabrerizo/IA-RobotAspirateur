@@ -15,12 +15,12 @@ public class Effecteur {
 	public boolean Aspirer(int posX, int posY)
 	{
 		
-		return env.Aspiration(posX,posY);
+		return env.aspiration(posX,posY);
 		
 	}
 	public boolean Prendre(int posX, int posY)
 	{
-		return env.PrendreBijoux(posX,posY);
+		return env.prendreBijoux(posX,posY);
 		
 	}
 	
@@ -29,9 +29,9 @@ public class Effecteur {
 		ArrayList<String> ListeAction = new ArrayList<String>();
 		ListeAction.add("Deplacer");
 		
-		if(env.cases[posX][posY].bijou==true)
+		if(env.getCase(posX,posY).getBijoux()==true)
 			ListeAction.add("Attraper");
-		if(env.cases[posX][posY].poussiere==true)
+		if(env.getCase(posX,posY).getPoussiere()==true)
 			ListeAction.add("Aspirer");
 			
 		return ListeAction;
