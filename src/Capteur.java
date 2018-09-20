@@ -22,7 +22,7 @@ public class Capteur {
 				{
 					if(CalculDistance(posX,j,posY,i)<distanceMin)
 					{
-						int[]temp= {i,j};
+						int[]temp= {j,i};
 						distanceMin=CalculDistance(posX,j,posY,i);
 						posPoussiere=temp;
 					}
