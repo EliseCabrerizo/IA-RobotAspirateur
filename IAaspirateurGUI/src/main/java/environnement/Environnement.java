@@ -1,3 +1,5 @@
+package environnement;
+
 public class Environnement {
 
     private Case[][] Case;
@@ -11,7 +13,7 @@ public class Environnement {
     }
 
     public Case getCase(int x, int y) {
-        if(x >0 && x < this.getTaille() && y >0 && y < this.getTaille())
+        if(x >=0 && x < this.getTaille() && y >=0 && y < this.getTaille())
         {
             return this.Case[x][y];
         }
@@ -124,11 +126,12 @@ public class Environnement {
         }
     }
 
-    public void Generation() // génère aléatoirement de la poussière et des bijoux sur une case aléatoire.
+    public int[] Generation() // génère aléatoirement de la poussière et des bijoux sur une case aléatoire.
     {
         int randomX= (int)(1+(Math.random()*(this.getTaille() - 1)));
         int randomY= (int)(1+(Math.random()*(this.getTaille() - 1)));
         int randomN= (int)(1+(Math.random()*(10 - 1)));
+        int[] tab = {randomX, randomY};
         boolean randomP = true;
         boolean randomB = true;
         if(randomN%2 > 0)   // si il est impaire alors on met la poussière à true
@@ -151,7 +154,8 @@ public class Environnement {
         }
         this.getCase(randomX,randomY).setPoussiere(randomP);
         this.getCase(randomX,randomY).setBijoux(randomB);
-
+        
+        return tab;
     }
     public boolean prendreBijoux(int x, int y)
     {

@@ -1,3 +1,5 @@
+package environnement;
+
 public class Case {
 
     private boolean Bijoux;
@@ -11,7 +13,6 @@ public class Case {
     public Case(boolean poussiere, boolean bijoux) {
         this.setBijoux(bijoux);
         this.setPoussiere(poussiere);
-        throw new UnsupportedOperationException();
     }
 
     public boolean getBijoux() {

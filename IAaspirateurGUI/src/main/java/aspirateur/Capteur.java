@@ -1,3 +1,6 @@
+package aspirateur;
+import environnement.*;
+
 public class Capteur {
 
 	Environnement env;

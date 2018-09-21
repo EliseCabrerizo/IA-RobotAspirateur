@@ -1,3 +1,6 @@
+package aspirateur;
+import environnement.*;
+
 import java.util.ArrayList;
 
 public class Effecteur {
