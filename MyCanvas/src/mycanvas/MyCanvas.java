@@ -18,8 +18,8 @@ public class MyCanvas extends JComponent {
   public void paintComponent(Graphics g, Environnement environnement) {
     super.paintComponent(g);
     // draw entire component white
-    g.setColor(Color.white);
-    g.fillRect(0, 0, getWidth(), getHeight());
+    //g.setColor(Color.white);
+    //g.fillRect(0, 0, getWidth(), getHeight());
     
     
     boolean poussiere = false;  
@@ -89,8 +89,19 @@ public class MyCanvas extends JComponent {
     Environnement environnement = new Environnement(10);
     while(true){
         c.paintComponent(c.getGraphics(), environnement);
+        environnement.Generation();
+        /*int pouss = 0;
+        int bij = 0;
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 10; j++) {
+                if (environnement.getCase(i, j).getBijoux()) bij++;
+                if (environnement.getCase(i, j).getPoussiere()) pouss++;
+            }
+        }
+        System.out.println("poussière : " + pouss);
+        System.out.println("bijoux : " + bij);*/
         try {
-            Thread.sleep(2000);
+            Thread.sleep(500);
         } catch (InterruptedException ex) {
             Logger.getLogger(MyCanvas.class.getName()).log(Level.SEVERE, null, ex);
         }
