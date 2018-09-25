@@ -29,7 +29,7 @@ public class MyCanvas extends JComponent {
     //Parcours de toutes les cases
     for (int i = 0; i < 10; i++) {
         for (int j = 0; j < 10; j++) {
-            path = "C:\\Vincent\\Cours uqac\\Intelligence artificielle\\TP1\\MyCanvas\\src\\ressource\\";
+            path = "D:\\UQAC\\COURS\\IA\\GIT_IA\\IA_robot\\MyCanvas\\src\\ressource\\";
             poussiere = environnement.getCase(i, j).getPoussiere();
             bijou = environnement.getCase(i, j).getBijoux();
 

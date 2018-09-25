@@ -102,7 +102,7 @@ public class Environnement {
                 for(int j=0;j<nbCase;j++) // on créer le premier set de case, avec des valeurs aléatoire
                 {
                     randomN= (int)(1+(Math.random()*(10 - 1))); // on tire un nombre aléatoire entre 1 et 10
-                    if(randomN%2 > 0)   // si il est impaire alors on met la poussière à true
+                    if(randomN > 7)   // si il est supérieur à 7, on met une pourrsière (30% de taux d'apparition)
                     {
                         randomP=true;
                         this.setPoussiereRrest(this.getPoussiere_rest()+1);
@@ -111,8 +111,8 @@ public class Environnement {
                     {
                         randomP=false;     // sinon on la met à false
                     }
-                    randomN= (int)(1+(Math.random()*(10 - 1))); // idem pour les bijaoux
-                    if(randomN%2 > 0)
+                    randomN= (int)(1+(Math.random()*(10 - 1)));
+                    if(randomN > 8) // si il est supérieur à 8, on met un bijou (20% de taux d'apparition)
                     {
                         randomB=true;
                     }
@@ -128,8 +128,14 @@ public class Environnement {
 
     public int[] Generation() // génère aléatoirement de la poussière et des bijoux sur une case aléatoire.
     {
+
         int randomX= (int)(1+(Math.random()*(this.getTaille() - 1)));
         int randomY= (int)(1+(Math.random()*(this.getTaille() - 1)));
+        while(this.getCase(randomX,randomY).getPoussiere() || this.getCase(randomX,randomY).getBijoux())
+        {
+            randomX= (int)(1+(Math.random()*(this.getTaille() - 1)));
+            randomY= (int)(1+(Math.random()*(this.getTaille() - 1)));
+        }
         int randomN= (int)(1+(Math.random()*(10 - 1)));
         int[] tab = {randomX, randomY};
         boolean randomP = true;
@@ -207,7 +213,8 @@ public class Environnement {
 
     public int calculScore(int energie, int bijoux)
     {
-        this.setScore(Math.abs(bijoux)*15+this.getScore()-(20*this.getBijoux_Abs())-(5*this.getPoussiere_rest())-Math.abs(energie)); // score = 10*poussière_attrap-15*nb_bijoux_abs-5*posière_rest-energie
+        // score = 15*bijoux _attrapé + 10*poussière_aspi - 20*bijoux_abs - 5*poussière_rest - energie
+        this.setScore(Math.abs(bijoux)*15+this.getScore()-(20*this.getBijoux_Abs())-(5*this.getPoussiere_rest())-Math.abs(energie));
         return this.getScore();
     }
 

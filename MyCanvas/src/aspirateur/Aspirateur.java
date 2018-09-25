@@ -11,6 +11,9 @@ public class Aspirateur
 	int posX;
 	int posY;
 	int energie;
+	int nbAction;
+	int score;
+	double alpha;
 	Capteur c;
 	Effecteur eff;
 	
@@ -21,6 +24,9 @@ public class Aspirateur
 		posX=0;
 		posY=0;
 		energie=0;
+		nbAction=30;
+		score=0;
+		alpha=0.15;
 		c = new Capteur(e);
 		eff = new Effecteur(e);
 	}
@@ -40,6 +46,15 @@ public class Aspirateur
 	
 	public int getEnergie() {return energie;}
 	public void setEnergie(int value) {energie=value;}
+
+	public int getNbAction() {return nbAction;}
+	public void setNbAction(int value) {nbAction=value;}
+
+	public int getScore() {return score;}
+	public void setScore(int value) {score=value;}
+	public double getAlpha() {return alpha;}
+	public void setAlpha(int value) {alpha=value;}
+
 	
 	
 	
@@ -107,6 +122,20 @@ public class Aspirateur
 			Thread.sleep(500);
 		}
 	}
-	
+	public void newSubGame()
+	{
+		setBijouxAttrapes(0);
+		setEnergie(0);
+
+	}
+	public void apprentissage()
+	{
+		// ici on prend le nombre d'action max qu'a le droit de faire le robot, son précédent score, son score actuel et la quantité d'énergie dépensée pour déterminer la nouvelle limite d'action.
+		int newAction = (int)Math.floor(getNbAction()+getAlpha()*((getScore()+15)-c.getScore(getEnergie(),getBijouxAttrapes()))*getEnergie()); // fonction du perceptron
+		setScore(c.getScore(getEnergie(),getBijouxAttrapes())); // on actualise le score du robot
+		setNbAction(newAction); // on actualise le nombre max d'action
+		newSubGame(); // on reset le nombre de bijoux attrapé et l'enrgie dépensée
+
+	}
 
 }

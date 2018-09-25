@@ -40,7 +40,10 @@ public class Capteur {
 		return (posX-j)+(posY-i);
 	}
 	
-	
+	public int getScore(int energie,int bijoux)
+	{
+		return env.calculScore(energie,bijoux);
+	}
 		
 }
 	
