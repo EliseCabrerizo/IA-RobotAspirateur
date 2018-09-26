@@ -17,8 +17,6 @@ public class MyCanvas extends JComponent {
 	public static Environnement environnement;
 	public static Aspirateur aspirateur;
 
-	public static ThreadAffichage threadAffichage;
-
 	public void paintComponent(Graphics g) {
 
 		super.paintComponent(g);
@@ -41,26 +39,32 @@ public class MyCanvas extends JComponent {
 				bijou = MyCanvas.environnement.getCase(i, j).getBijoux();
 				aspirateurIci = MyCanvas.aspirateur.getPosX() == i && MyCanvas.aspirateur.getPosY() == j;
 
-				// if(!aspirateurIci){
-				// bijou + poussiere
-				if (bijou && poussiere)
-					path = path + "diamant+poussiere.jpg";
-				// bijou
-				else if (bijou && !poussiere)
-					path = path + "diamant.jpg";
-				// poussiere
-				else if (!bijou && poussiere)
-					path = path + "poussiere.jpg";
-				// vide
-				else if (!bijou && !poussiere)
-					path = path + "case_vide.png";
-				/*
-				 * }else { //bijou + poussiere if (bijou && poussiere) path = path +
-				 * "diamant+aspirateur+poussiere.jpg"; //bijou else if (bijou && !poussiere)
-				 * path = path + "diamant+aspirateur.jpg"; //poussiere else if (!bijou &&
-				 * poussiere) path = path + "poussiere+aspirateur.jpg"; //vide else if (!bijou
-				 * && !poussiere) path = path + "aspirateur.jpg"; }
-				 */
+				if (!aspirateurIci) {
+					// bijou + poussiere
+					if (bijou && poussiere)
+						path = path + "diamant+poussiere.jpg";
+					// bijou
+					else if (bijou && !poussiere)
+						path = path + "diamant.jpg";
+					// poussiere
+					else if (!bijou && poussiere)
+						path = path + "poussiere.jpg";
+					// vide
+					else if (!bijou && !poussiere)
+						path = path + "case_vide.png";
+
+				} else { // bijou + poussiere
+					if (bijou && poussiere)
+						path = path + "diamant+aspirateur+poussiere.jpg"; // bijou
+					else if (bijou && !poussiere)
+						path = path + "diamant+aspirateur.jpg";
+					// poussiere
+					else if (!bijou && poussiere)
+						path = path + "poussiere+aspirateur.jpg";
+					// vide
+					else if (!bijou && !poussiere)
+						path = path + "aspirateur.jpg";
+				}
 
 				BufferedImage img = null;
 				// Lecture du fichier image
@@ -99,11 +103,11 @@ public class MyCanvas extends JComponent {
 
 		threadAffichage.start();
 		threadEnvironnement.start();
-//		threadAspirateur.start();
+		threadAspirateur.start();
 
 		int n = 0;
 		while (true) {
-			System.out.println(n++);
+			// System.out.println(n++);
 			try {
 				Thread.sleep(3000);
 			} catch (InterruptedException e) {
