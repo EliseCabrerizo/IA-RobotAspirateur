@@ -1,6 +1,5 @@
 package aspirateur;
 import environnement.*;
-
 import java.util.ArrayList;
 
 public class Aspirateur 
@@ -16,6 +15,7 @@ public class Aspirateur
 	double alpha;
 	Capteur c;
 	Effecteur eff;
+	Environnement env;
 	
 	public Aspirateur(Environnement e)
 	{
@@ -24,11 +24,10 @@ public class Aspirateur
 		posX=0;
 		posY=0;
 		energie=0;
-		nbAction=30;
-		score=0;
-		alpha=0.15;
 		c = new Capteur(e);
 		eff = new Effecteur(e);
+		env=e;
+		
 	}
 	
 	//Accesseurs
@@ -46,7 +45,7 @@ public class Aspirateur
 	
 	public int getEnergie() {return energie;}
 	public void setEnergie(int value) {energie=value;}
-
+	
 	public int getNbAction() {return nbAction;}
 	public void setNbAction(int value) {nbAction=value;}
 
@@ -54,88 +53,99 @@ public class Aspirateur
 	public void setScore(int value) {score=value;}
 	public double getAlpha() {return alpha;}
 	public void setAlpha(int value) {alpha=value;}
-
-	
-	
 	
 	//Methodes
 	public void Boucle() throws InterruptedException
 	{
-		//Observer l'element
-		int[]poussierePos=c.TrouverPoussiere(posX,posY);
-		
-		//Changer l'etat
-		////A faire
-		
-		//Choisir les actions
-		ArrayList<String> ListeAction = eff.ChoisirAction(poussierePos[0], poussierePos[1]);
-		
-		//Faire les actions
-		if(ListeAction.contains( "Deplacer"))
-			Deplacement(poussierePos[0],poussierePos[1]);
-		if(ListeAction.contains( "Attraper"))
+		//Belief
+		//Observer l'element B
+		env=c.Observer();
+		//Faire les actions I
+		// I : Trouver poussiere, se deplacer dans tableau
+		int[]poussierePos= eff.TrouverPoussiere(posX, posY);
+		ArrayList<String> Intentions = eff.CreationIntentions(posX, posY, poussierePos[0], poussierePos[1]);
+		while(Intentions.size()!=0)
 		{
-			if(eff.Prendre(posX, posY))
-				bijouxAttrapes+=1;
-			energie+=1;
+			ExecuteIntention(Intentions.get(0));
+			Intentions.remove(0);
+			
 		}
-		if(ListeAction.contains( "Aspirer"))
-		{
-			if(eff.Aspirer(posX, posY))
-				poussieresAspirees+=1;
-			energie+=1;
-		}
+		
+		// B observation matrice
+		// D optionnel : meilleur score
+		// I : Trouver poussiere, se deplacer dans tableau 
+		
 		
 	}
-	public void Deplacement(int posXFinale,int posYFinale) throws InterruptedException
+	public void ExecuteIntention(String Intention)
 	{
-		
-			while(posX!=posXFinale)
-		{
-			if(posX>posXFinale)
+		if(Intention=="G")
 			{
-				posX--;
+				if(posX>0)
+				{
+					posX--;
+					energie+=1;
+				}
+			}
+			if(Intention=="D")
+			{
+				if(posX<env.getTaille()-1)
+				{
+					posX++;
+					energie+=1;
+				}
+			}
+			if(Intention=="H")
+			{
+				if(posY>0)
+				{
+					posY--;
+					energie+=1;
+				}
+					
+			}
+			if(Intention=="B")
+			{
+				if(posY<env.getTaille()-1)
+				{
+					posY++;
+					energie+=1;
+				}
+					
+			}
+			if(Intention=="R")
+			{
+				if(eff.Prendre(posX, posY))
+					bijouxAttrapes+=1;
 				energie+=1;
 			}
-			else 
+			if(Intention=="A")
 			{
-				posX++;
+				if(eff.Aspirer(posX, posY))
+					poussieresAspirees+=1;
 				energie+=1;
 			}
-
-			Thread.sleep(500);
-		}
-		while(posY!=posYFinale)
-		{
-			if(posX>posYFinale)
-			{
-				posY--;
-				energie+=1;;
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-			else 
-			{
-				posY++;
-				energie+=1;
-
-			}
-
-			Thread.sleep(500);
 		}
-	}
-	public void newSubGame()
-	{
-		setBijouxAttrapes(0);
-		setEnergie(0);
 
-	}
-	public void apprentissage()
-	{
-		// ici on prend le nombre d'action max qu'a le droit de faire le robot, son précédent score, son score actuel et la quantité d'énergie dépensée pour déterminer la nouvelle limite d'action.
-		int newAction = (int)Math.floor(getNbAction()+getAlpha()*((getScore()+15)-c.getScore(getEnergie(),getBijouxAttrapes()))*getEnergie()); // fonction du perceptron
-		setScore(c.getScore(getEnergie(),getBijouxAttrapes())); // on actualise le score du robot
-		setNbAction(newAction); // on actualise le nombre max d'action
-		newSubGame(); // on reset le nombre de bijoux attrapé et l'enrgie dépensée
+public void newSubGame()
+{
+	setBijouxAttrapes(0);
+	setEnergie(0);
 
-	}
+}
+public void apprentissage()
+{
+	// ici on prend le nombre d'action max qu'a le droit de faire le robot, son précédent score, son score actuel et la quantité d'énergie dépensée pour déterminer la nouvelle limite d'action.
+	int newAction = (int)Math.floor(getNbAction()+getAlpha()*((getScore()+15)-c.getScore(getEnergie(),getBijouxAttrapes()))*getEnergie()); // fonction du perceptron
+	setScore(c.getScore(getEnergie(),getBijouxAttrapes())); // on actualise le score du robot
+	setNbAction(newAction); // on actualise le nombre max d'action
+	newSubGame(); // on reset le nombre de bijoux attrapé et l'enrgie dépensée
 
+}
 }

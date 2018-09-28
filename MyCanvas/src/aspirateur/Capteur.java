@@ -13,32 +13,11 @@ public class Capteur {
 	public Environnement getEnvironnement() {return env;}
 	public void setEnvironnements(Environnement value) {env=value;}
 	
-	public int[] TrouverPoussiere(int posX, int posY)
+	public Environnement Observer()
 	{
-		int distanceMin=1000;
-		int[] posPoussiere=null;
-		
-		for (int i=0; i<env.getTaille()&&distanceMin!=1;i++)
-			for(int j=0;j<env.getTaille()&&distanceMin!=1;j++)
-			{
-				if(env.getCase(j,i).getPoussiere()==true)
-				{
-					if(CalculDistance(posX,j,posY,i)<distanceMin)
-					{
-						int[]temp= {j,i};
-						distanceMin=CalculDistance(posX,j,posY,i);
-						posPoussiere=temp;
-					}
-				}
-			}
-		
-		return posPoussiere;
+		return env;
 	}
 	
-	public int CalculDistance(int posX,int j,int posY, int i)
-	{
-		return (posX-j)+(posY-i);
-	}
 	
 	public int getScore(int energie,int bijoux)
 	{
