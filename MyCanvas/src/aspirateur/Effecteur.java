@@ -21,8 +21,8 @@ public class Effecteur {
 	public int[] TrouverPoussiere(int posX, int posY) {
 		int couche = 0;
 		boolean trouverProche = false;
-		int[] posPoussiere = null;
-		while (!trouverProche) {
+		int[] posPoussiere = new int[] {0, 0};
+		while (!trouverProche && couche<MyCanvas.environnement.getTaille()) {
 			//Verification emplacement
 			if(MyCanvas.environnement.getCase(posX, posY).getPoussiere())
 			{
@@ -54,6 +54,8 @@ public class Effecteur {
 					trouverProche = true;
 					posPoussiere = new int[] { posX, posY - couche - 1 };
 				}
+			
+			//Verification diagonale
 			if(couche>=1)
 			{
 				// Verification diagonale haut droite
@@ -89,6 +91,7 @@ public class Effecteur {
 		return posPoussiere;
 	}
 
+	
 	public ArrayList<String> CreationIntentions(int posX, int posY,int posXP, int posYP) {
 		ArrayList<String> ListeAction = new ArrayList<String>();
 		Environnement env = MyCanvas.environnement;
