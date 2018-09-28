@@ -79,7 +79,7 @@ public class Aspirateur
 	}
 	public void ExecuteIntention(String Intention)
 	{
-		if(Intention=="G")
+		if(Intention.equals("G"))
 			{
 				if(posX>0)
 				{
@@ -87,7 +87,7 @@ public class Aspirateur
 					energie+=1;
 				}
 			}
-			if(Intention=="D")
+			if(Intention.equals("D"))
 			{
 				if(posX<env.getTaille()-1)
 				{
@@ -95,7 +95,7 @@ public class Aspirateur
 					energie+=1;
 				}
 			}
-			if(Intention=="H")
+			if(Intention.equals("H"))
 			{
 				if(posY>0)
 				{
@@ -104,7 +104,7 @@ public class Aspirateur
 				}
 					
 			}
-			if(Intention=="B")
+			if(Intention.equals("B"))
 			{
 				if(posY<env.getTaille()-1)
 				{
@@ -113,13 +113,13 @@ public class Aspirateur
 				}
 					
 			}
-			if(Intention=="R")
+			if(Intention.equals("R"))
 			{
 				if(eff.Prendre(posX, posY))
 					bijouxAttrapes+=1;
 				energie+=1;
 			}
-			if(Intention=="A")
+			if(Intention.equals("A"))
 			{
 				if(eff.Aspirer(posX, posY))
 					poussieresAspirees+=1;
