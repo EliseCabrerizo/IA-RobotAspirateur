@@ -1,28 +1,19 @@
 package aspirateur;
+
 import environnement.*;
+import mycanvas.MyCanvas;
 
 public class Capteur {
 
-	Environnement env;
-	
-	public Capteur(Environnement e)
-	{
-		env=e;	
+	public Capteur() {
 	}
 
-	public Environnement getEnvironnement() {return env;}
-	public void setEnvironnements(Environnement value) {env=value;}
-	
-	public Environnement Observer()
-	{
-		return env;
+	public Environnement Observer() {
+		return MyCanvas.environnement;
 	}
-	
-	
-	public int getScore(int energie,int bijoux)
-	{
-		return env.calculScore(energie,bijoux);
+
+	public int getScore(int energie, int bijoux) {
+		return MyCanvas.environnement.calculScore(energie, bijoux);
 	}
-		
+
 }
-	

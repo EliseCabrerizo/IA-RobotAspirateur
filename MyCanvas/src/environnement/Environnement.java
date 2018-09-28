@@ -35,7 +35,6 @@ public class Environnement {
 	}
 
 	public int getBijoux_Abs() {
-		// TODO - implement Environnement.getBijoux_Abs
 		return this.bijouxAbs;
 	}
 
@@ -44,12 +43,10 @@ public class Environnement {
 	 * @param bijouxAbs
 	 */
 	public void setBijouxAbs(int bijouxAbs) {
-		// TODO - implement Environnement.setBijoux_Abs
 		this.bijouxAbs = bijouxAbs;
 	}
 
 	public int getPoussiere_rest() {
-		// TODO - implement Environnement.getPoussiere_rest
 		return this.poussiereRest;
 	}
 
@@ -58,12 +55,10 @@ public class Environnement {
 	 * @param poussiere_rest
 	 */
 	public void setPoussiereRrest(int poussiere_rest) {
-		// TODO - implement Environnement.setPoussiere_rest
 		this.poussiereRest = poussiere_rest;
 	}
 
 	public int getScore() {
-		// TODO - implement Environnement.getScore
 		return this.score;
 	}
 
@@ -80,7 +75,6 @@ public class Environnement {
 	 * @param nbCase
 	 */
 	public Environnement(int nbCase) {
-		// TODO - implement Environnement.Environnement
 		if (nbCase > 0) {
 			this.taille = nbCase;
 			this.Case = new Case[nbCase][nbCase];
@@ -125,7 +119,7 @@ public class Environnement {
 			randomY = (int) (1 + (Math.random() * (this.getTaille() - 1)));
 		}
 		int randomN = (int) (1 + (Math.random() * (10 - 1)));
-		int[] tab = { randomX, randomY };
+		
 		boolean randomP = true;
 		boolean randomB = true;
 		if (randomN % 2 > 0) // si il est impaire alors on met la poussière à true
@@ -143,10 +137,11 @@ public class Environnement {
 		}
 		this.getCase(randomX, randomY).setPoussiere(randomP);
 		this.getCase(randomX, randomY).setBijoux(randomB);
+
 	}
 
 	public boolean prendreBijoux(int x, int y) {
-		if (x > 0 && x < this.getTaille() && y > 0 && y < this.getTaille()) {
+		if (x >= 0 && x < this.getTaille() && y >= 0 && y < this.getTaille()) {
 			if (this.getCase(x, y).getBijoux() == true) {
 				this.getCase(x, y).setBijoux(false);
 				return true;
@@ -159,23 +154,24 @@ public class Environnement {
 	}
 
 	public boolean aspiration(int x, int y) {
-		if (x > 0 && x < this.getTaille() && y > 0 && y < this.getTaille()) {
-			if (this.getCase(x, y).getBijoux() == true) {
+		boolean aRetourner=false;
+		if (x >= 0 && x < this.getTaille() && y >= 0 && y < this.getTaille()) {
+			if (this.getCase(x, y).getBijoux()) {
 				this.getCase(x, y).setBijoux(false);
 				this.setBijouxAbs(this.getBijoux_Abs() + 1);
+				aRetourner=true;
 			}
-			if (this.getCase(x, y).getPoussiere() == true) {
+			if (this.getCase(x, y).getPoussiere()) {
 				this.getCase(x, y).setPoussiere(false);
 				this.setPoussiereRrest(this.getPoussiere_rest() - 1);
 				this.setScore(this.getScore() + 10);
-				return true;
-			} else {
-				return false;
+				aRetourner= true;
 			}
 
 		} else {
 			throw new UnsupportedOperationException();
 		}
+		return aRetourner;
 	}
 
 	public int calculScore(int energie, int bijoux) {

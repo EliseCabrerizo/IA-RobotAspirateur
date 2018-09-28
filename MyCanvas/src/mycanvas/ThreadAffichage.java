@@ -53,7 +53,7 @@ public class ThreadAffichage extends Thread {
 		while (true) {
 			c.paintComponent(c.getGraphics());
 			try {
-				Thread.sleep(500);
+				Thread.sleep(100);
 			} catch (InterruptedException ex) {
 				Logger.getLogger(MyCanvas.class.getName()).log(Level.SEVERE, null, ex);
 			}

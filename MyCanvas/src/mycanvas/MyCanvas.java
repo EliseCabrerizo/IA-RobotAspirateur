@@ -2,6 +2,8 @@ package mycanvas;
 
 import aspirateur.Aspirateur;
 import environnement.Environnement;
+
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
@@ -20,9 +22,9 @@ public class MyCanvas extends JComponent {
 	public void paintComponent(Graphics g) {
 
 		super.paintComponent(g);
-		// draw entire component white
-		// g.setColor(Color.white);
-		// g.fillRect(0, 0, getWidth(), getHeight());
+//		 draw entire component white
+//		 g.setColor(Color.white);
+//		 g.fillRect(0, 0, getWidth(), getHeight());
 
 		boolean poussiere = false;
 		boolean bijou = false;
@@ -30,15 +32,15 @@ public class MyCanvas extends JComponent {
 		String path;
 
 		// Parcours de toutes les cases
-		for (int i = 0; i < 10; i++) {
-			for (int j = 0; j < 10; j++) {
+		for (int i = 0; i < MyCanvas.environnement.getTaille(); i++) {
+			for (int j = 0; j < MyCanvas.environnement.getTaille(); j++) {
 				// path = "C:\\Vincent\\Cours uqac\\Intelligence
 				// artificielle\\TP1\\MyCanvas\\src\\ressource\\";
 				path = ".\\src\\ressource\\";
 				poussiere = MyCanvas.environnement.getCase(i, j).getPoussiere();
 				bijou = MyCanvas.environnement.getCase(i, j).getBijoux();
 				aspirateurIci = MyCanvas.aspirateur.getPosX() == i && MyCanvas.aspirateur.getPosY() == j;
-
+				
 				if (!aspirateurIci) {
 					// bijou + poussiere
 					if (bijou && poussiere)
@@ -105,15 +107,15 @@ public class MyCanvas extends JComponent {
 		threadEnvironnement.start();
 		threadAspirateur.start();
 
-		int n = 0;
-		while (true) {
-			// System.out.println(n++);
-			try {
-				Thread.sleep(3000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
+		// int n = 0;
+		// while (true) {
+		// // System.out.println(n++);
+		// try {
+		// Thread.sleep(3000);
+		// } catch (InterruptedException e) {
+		// e.printStackTrace();
+		// }
+		// }
 		// initialisation du frame et du canvas
 		// JFrame mainFrame = new JFrame("Graphics demo");
 		// MyCanvas c = new MyCanvas();

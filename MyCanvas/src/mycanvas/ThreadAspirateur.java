@@ -37,15 +37,16 @@ public class ThreadAspirateur extends Thread {
 
 	}
 
-
 	@Override
 	public void run() {
 		super.run();
-
-		try {
-			MyCanvas.aspirateur.Boucle();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
+		while (true) {
+			try {
+				MyCanvas.aspirateur.Boucle();
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
