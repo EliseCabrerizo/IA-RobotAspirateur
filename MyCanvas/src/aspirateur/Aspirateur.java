@@ -107,8 +107,7 @@ public class Aspirateur {
 		
 		while (Intentions.size() != 0) {
 			ExecuteIntention(Intentions.get(0));
-			if(Intentions.get(0).equals("R"))
-				Thread.sleep(500);
+			Thread.sleep(500);
 			Intentions.remove(0);
 
 		}

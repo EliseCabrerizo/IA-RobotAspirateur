@@ -50,7 +50,7 @@ public class ThreadEnvironnement extends Thread {
 		while (true) {
 			MyCanvas.environnement.Generation();
 			try {
-				Thread.sleep(500);
+				Thread.sleep(2000);
 			} catch (InterruptedException ex) {
 				Logger.getLogger(MyCanvas.class.getName()).log(Level.SEVERE, null, ex);
 			}

@@ -112,13 +112,13 @@ public class Environnement {
 								// aléatoire.
 	{
 
-		int randomX = (int) (1 + (Math.random() * (this.getTaille() - 1)));
-		int randomY = (int) (1 + (Math.random() * (this.getTaille() - 1)));
+		int randomX = (int) ((Math.random() * (this.getTaille())));
+		int randomY = (int) ((Math.random() * (this.getTaille())));
 		while (this.getCase(randomX, randomY).getPoussiere() || this.getCase(randomX, randomY).getBijoux()) {
-			randomX = (int) (1 + (Math.random() * (this.getTaille() - 1)));
-			randomY = (int) (1 + (Math.random() * (this.getTaille() - 1)));
+			randomX = (int) ((Math.random() * (this.getTaille())));
+			randomY = (int) ((Math.random() * (this.getTaille())));
 		}
-		int randomN = (int) (1 + (Math.random() * (10 - 1)));
+		int randomN = (int) ((Math.random() * (10)));
 		
 		boolean randomP = true;
 		boolean randomB = true;
@@ -129,7 +129,7 @@ public class Environnement {
 		} else {
 			randomP = false; // sinon on la met à false
 		}
-		randomN = (int) (1 + (Math.random() * (10 - 1))); // idem pour les bijoux
+		randomN = (int) ((Math.random() * (10))); // idem pour les bijoux
 		if (randomN % 2 > 0) {
 			randomB = true;
 		} else {

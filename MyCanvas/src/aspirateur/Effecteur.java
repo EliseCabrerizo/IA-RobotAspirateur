@@ -1,6 +1,8 @@
 package aspirateur;
 
 import java.util.ArrayList;
+
+import environnement.Environnement;
 import mycanvas.MyCanvas;
 
 public class Effecteur {
@@ -27,56 +29,60 @@ public class Effecteur {
 				trouverProche = true;
 				posPoussiere = new int[] { posX, posY };
 			}
-			// Verification poussière à droite
+			// Verification poussiere à droite
 			if (posX + couche + 1 < MyCanvas.environnement.getTaille()&&!trouverProche)
 				if (MyCanvas.environnement.getCase(posX + couche + 1, posY).getPoussiere()) {
 					trouverProche = true;
 					posPoussiere = new int[] { posX + couche + 1, posY };
 				}
-			// Verification poussière à gauche
+			// Verification poussiere à gauche
 			if (posX - couche - 1 >= 0 && !trouverProche)
 				if (MyCanvas.environnement.getCase(posX - couche - 1, posY).getPoussiere()) {
 					trouverProche = true;
 					posPoussiere = new int[] { posX - couche - 1, posY };
 
 				}
-			// Verification poussière en bas
+			// Verification poussiere en bas
 			if (posY + couche + 1 < MyCanvas.environnement.getTaille() && !trouverProche)
 				if (MyCanvas.environnement.getCase(posX, posY + couche + 1).getPoussiere()) {
 					trouverProche = true;
 					posPoussiere = new int[] { posX, posY + couche + 1 };
 				}
-			// Verification poussière en haut
+			// Verification poussiere en haut
 			if (posY - couche - 1 >= 0 && !trouverProche)
 				if (MyCanvas.environnement.getCase(posX, posY - couche - 1).getPoussiere()) {
 					trouverProche = true;
 					posPoussiere = new int[] { posX, posY - couche - 1 };
 				}
-			// Verification diagonale haut droite
-			if (posX + couche + 1 < MyCanvas.environnement.getTaille() && posY - couche - 1 >= 0 && !trouverProche)
-				if (MyCanvas.environnement.getCase(posX + couche + 1, posY - couche - 1).getPoussiere()) {
-					trouverProche = true;
-					posPoussiere = new int[] { posX + couche + 1, posY - couche - 1 };
-				}
-			// Verification diagonale haut gauche
-			if (posX - couche - 1 >= 0 && posY - couche - 1 >= 0 && !trouverProche)
-				if (MyCanvas.environnement.getCase(posX - couche - 1, posY - couche - 1).getPoussiere()) {
-					trouverProche = true;
-					posPoussiere = new int[] { posX - couche - 1, posY - couche - 1 };
-				}
-			// Verification diagonale bas droit
-			if (posX + couche + 1 < MyCanvas.environnement.getTaille()
-					&& posY + couche + 1 < MyCanvas.environnement.getTaille() && !trouverProche)
-				if (MyCanvas.environnement.getCase(posX + couche + 1, posY + couche + 1).getPoussiere()) {
-					trouverProche = true;
-					posPoussiere = new int[] { posX + couche + 1, posY + couche + 1 };
-				}
-			// Verification diagonale bas gauche
-			if (posX - couche - 1 >= 0 && posY + couche + 1 < MyCanvas.environnement.getTaille() && !trouverProche)
-				if (MyCanvas.environnement.getCase(posX - couche - 1, posY + couche + 1).getPoussiere()) {
-					trouverProche = true;
-					posPoussiere = new int[] { posX - couche - 1, posY + couche + 1 };
-				}
+			if(couche>=1)
+			{
+				// Verification diagonale haut droite
+				if (posX + couche < MyCanvas.environnement.getTaille() && posY - couche >= 0 && !trouverProche)
+					if (MyCanvas.environnement.getCase(posX + couche, posY - couche).getPoussiere()) {
+						trouverProche = true;
+						posPoussiere = new int[] { posX + couche, posY - couche };
+					}
+				// Verification diagonale haut gauche
+				if (posX - couche >= 0 && posY - couche >= 0 && !trouverProche)
+					if (MyCanvas.environnement.getCase(posX - couche, posY - couche).getPoussiere()) {
+						trouverProche = true;
+						posPoussiere = new int[] { posX - couche, posY - couche };
+					}
+				// Verification diagonale bas droit
+				if (posX + couche < MyCanvas.environnement.getTaille()
+						&& posY + couche < MyCanvas.environnement.getTaille() && !trouverProche)
+					if (MyCanvas.environnement.getCase(posX + couche, posY + couche).getPoussiere()) {
+						trouverProche = true;
+						posPoussiere = new int[] { posX + couche, posY + couche};
+					}
+				// Verification diagonale bas gauche
+				if (posX - couche>= 0 && posY + couche < MyCanvas.environnement.getTaille() && !trouverProche)
+					if (MyCanvas.environnement.getCase(posX - couche , posY + couche).getPoussiere()) {
+						trouverProche = true;
+						posPoussiere = new int[] { posX - couche, posY + couche};
+					}
+			}
+			
 			couche++;
 		}
 
@@ -85,16 +91,21 @@ public class Effecteur {
 
 	public ArrayList<String> CreationIntentions(int posX, int posY,int posXP, int posYP) {
 		ArrayList<String> ListeAction = new ArrayList<String>();
+		Environnement env = MyCanvas.environnement;
 		if (posX != posXP) {
 			if (posX < posXP) {
 				while (posX < posXP) {
 					ListeAction.add("D");
 					posX++;
+					if(env.getCase(posX, posY).getBijoux())
+						ListeAction.add("R");
 				}
 			} else {
 				while (posX > posXP) {
 					ListeAction.add("G");
 					posX--;
+					if(env.getCase(posX, posY).getBijoux())
+						ListeAction.add("R");
 				}
 			}
 		}
@@ -103,11 +114,15 @@ public class Effecteur {
 				while (posY < posYP) {
 					ListeAction.add("B");
 					posY++;
+					if(env.getCase(posX, posY).getBijoux())
+						ListeAction.add("R");
 				}
 			} else {
 				while (posY > posYP) {
 					ListeAction.add("H");
 					posY--;
+					if(env.getCase(posX, posY).getBijoux())
+						ListeAction.add("R");
 				}
 			}
 		}
